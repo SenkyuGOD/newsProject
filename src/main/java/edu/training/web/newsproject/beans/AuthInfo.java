@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthInfo implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     @NotEmpty(message = "User cannot be empty")
     @Size(min = 2, max = 20)

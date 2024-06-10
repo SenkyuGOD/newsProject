@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,6 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Integer userId;
@@ -20,13 +23,6 @@ public class User implements Serializable {
     @NotEmpty
     private String username;
 
-    @NotEmpty(message = "email cannot be empty")
-    @Email(message = "email should be valid")
-    private String email;
-
-    private String password;
-    private String firstName;
-    private String lastName;
     private String role;
 
     @Override
@@ -34,17 +30,12 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(role, user.role);
+        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, email, firstName, lastName, role);
+        return Objects.hash(userId, username, role);
     }
 
     @Override
@@ -52,9 +43,6 @@ public class User implements Serializable {
         return "User{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }
