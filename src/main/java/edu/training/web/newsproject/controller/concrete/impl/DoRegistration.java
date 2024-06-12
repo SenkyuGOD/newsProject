@@ -44,9 +44,7 @@ public class DoRegistration implements Command {
             }
 
             User user = new User();
-            user.setEmail(email);
             user.setUserId(IDUtils.generateID());
-            user.setPassword(password);
 
             UserRegInfo userRegInfo = new UserRegInfo();
             userRegInfo.setUsername(username);
