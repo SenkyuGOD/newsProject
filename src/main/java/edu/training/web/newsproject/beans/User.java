@@ -24,7 +24,6 @@ public class User implements Serializable {
     private String username;
     @Email
     private String email;
-
     private UserRoles role;
 
     @Override
@@ -32,21 +31,12 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(role, user.role);
+        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, role);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+        return Objects.hash(userId, username, email, role);
     }
 }
 

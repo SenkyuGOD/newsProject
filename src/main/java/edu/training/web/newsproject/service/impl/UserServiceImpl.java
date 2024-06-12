@@ -3,10 +3,9 @@ package edu.training.web.newsproject.service.impl;
 import edu.training.web.newsproject.beans.AuthInfo;
 import edu.training.web.newsproject.beans.User;
 import edu.training.web.newsproject.beans.UserRegInfo;
-import edu.training.web.newsproject.dao.AuthDao;
 import edu.training.web.newsproject.dao.DaoException;
 import edu.training.web.newsproject.dao.DaoProvider;
-import edu.training.web.newsproject.dao.RegDao;
+import edu.training.web.newsproject.dao.UserDao;
 import edu.training.web.newsproject.service.ServiceException;
 import edu.training.web.newsproject.service.UserService;
 
@@ -14,28 +13,27 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-    private final AuthDao authDao = DaoProvider.getInstance().getAuthDao();
-    private final RegDao regDao = DaoProvider.getInstance().getRegDao();
+    private UserDao userDao = DaoProvider.getInstance().getUserDao();
 
 
     @Override
     public Optional<User> signIn(AuthInfo authInfo) throws ServiceException {
 
-        return authDao.signIn(authInfo);
+        return userDao.signIn(authInfo);
     }
 
     @Override
     public User rememberMe(String token) throws ServiceException {
-        return authDao.checkToken(token);
+        return userDao.checkToken(token);
     }
 
     @Override
     public boolean updateUser(User user) throws ServiceException {
-        Optional<User> existingUser = regDao.getUserByEmail(user.getEmail());
+        Optional<User> existingUser = userDao.getUserByEmail(user.getEmail());
         if (existingUser.isPresent() && !Objects.equals(existingUser.get().getUserId(), user.getUserId())) {
             throw new ServiceException("Another user with this email already exists");
         }
-        return regDao.updateUser(user);
+        return .updateUser(user);
     }
 
     @Override

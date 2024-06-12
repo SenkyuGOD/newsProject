@@ -19,6 +19,7 @@ public class UserRegInfo implements Serializable {
     private String username;
     private String email;
     private String password;
+    private String confirmPassword;
 
 
     @Override
@@ -26,16 +27,16 @@ public class UserRegInfo implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserRegInfo that = (UserRegInfo) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
+        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(confirmPassword, that.confirmPassword);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, email, password);
+        return Objects.hash(userId, username, email, password, confirmPassword);
     }
 
     @Override
     public String toString() {
-        return "UserRegInfo{" + "userId=" + userId + ", username='" + username + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + '}';
+        return "UserRegInfo{" + "userId=" + userId + ", username='" + username + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + ", confirmPassword='" + confirmPassword + '\'' + '}';
     }
 }

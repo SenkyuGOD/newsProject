@@ -9,9 +9,7 @@ import lombok.Getter;
 public class DaoProvider {
     private static final DaoProvider INSTANCE = new DaoProvider();
 
-    private final AuthDao authDao = new SQLUserDao();
-
-    private final RegDao regDao = new SQLUserDao();
+    private final UserDao userDao = new SQLUserDao();
 
     private final NewsDao newsDao = new SQLNewsDao();
 
