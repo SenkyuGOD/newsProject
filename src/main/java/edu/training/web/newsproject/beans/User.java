@@ -1,5 +1,6 @@
 package edu.training.web.newsproject.beans;
 
+import edu.training.web.newsproject.service.UserRoles;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -21,10 +22,10 @@ public class User implements Serializable {
     private Integer userId;
     @NotEmpty
     private String username;
-    @NotEmpty
+    @Email
     private String email;
 
-    private String role;
+    private UserRoles role;
 
     @Override
     public boolean equals(Object o) {

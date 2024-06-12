@@ -15,5 +15,5 @@ public interface RegDao {
 
     Optional<User> getUserByUsername(String username);
 
-    void saveUserRegInfo(UserRegInfo userRegInfo) throws DaoException;
+    User saveUserRegInfo(UserRegInfo userRegInfo) throws DaoException;
 }
