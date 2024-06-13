@@ -6,7 +6,7 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
 @WebListener
-public class AppContextListener implements ServletContextListener {
+public class ConnectionPoolListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ConnectionPool.getInstance();
