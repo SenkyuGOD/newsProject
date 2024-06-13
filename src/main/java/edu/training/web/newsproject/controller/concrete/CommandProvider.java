@@ -23,11 +23,6 @@ public class CommandProvider {
         commands.put(CommandName.GET_NEWS, new GetNewsCommand());
         commands.put(CommandName.UPDATE_NEWS, new UpdateNewsCommand());
 
-        /*commands.put(CommandName.GET_COMMENTS, new);
-        commands.put(CommandName.ADD_COMMENT, new);
-        commands.put(CommandName.DELETE_COMMENT, new);
-        commands.put(CommandName.UPDATE_COMMENT, new);*/
-
         commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
     }
 
