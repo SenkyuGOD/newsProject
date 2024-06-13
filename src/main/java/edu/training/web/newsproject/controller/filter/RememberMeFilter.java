@@ -10,6 +10,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 public class RememberMeFilter extends HttpFilter implements Filter {
+    @Serial 
     private static final long serialVersionUID = 1L;
 
     private final UserService userService = ServiceProvider.getInstance().getUserService();
