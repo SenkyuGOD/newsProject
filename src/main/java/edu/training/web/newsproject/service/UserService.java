@@ -4,16 +4,18 @@ import edu.training.web.newsproject.beans.AuthInfo;
 import edu.training.web.newsproject.beans.User;
 import edu.training.web.newsproject.beans.UserRegInfo;
 
-import java.util.Optional;
+import java.util.Map;
 
 public interface UserService {
-    Optional<User> signIn(AuthInfo authInfo) throws ServiceException;
+    User signIn(AuthInfo authInfo) throws ServiceException;
 
-    void registration(User user,UserRegInfo regInfo) throws ServiceException;
+    User signUp(UserRegInfo regInfo) throws ServiceException;
 
-    Optional<User> getInfo(AuthInfo authInfo) throws ServiceException;
+    void changeUserPassword(int id, String newPassword, String confirmPassword) throws ServiceException;
 
     User rememberMe(String token) throws ServiceException;
 
-    boolean updateUser(User user) throws ServiceException;
+    void deleteUser(int id) throws ServiceException;
+
+    Map<String, User> getAllUsers() throws ServiceException;
 }

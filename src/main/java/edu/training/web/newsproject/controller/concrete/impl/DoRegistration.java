@@ -51,7 +51,7 @@ public class DoRegistration implements Command {
             userRegInfo.setPassword(password);
             userRegInfo.setEmail(email);
 
-            userService.registration(user, userRegInfo);
+            userService.signUp(userRegInfo);
 
 
             response.sendRedirect(request.getContextPath() + "/index.jsp");
