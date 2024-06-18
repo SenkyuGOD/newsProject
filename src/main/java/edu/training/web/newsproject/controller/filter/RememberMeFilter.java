@@ -8,9 +8,10 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.io.Serial;
 
 public class RememberMeFilter extends HttpFilter implements Filter {
-    @Serial 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final UserService userService = ServiceProvider.getInstance().getUserService();
@@ -38,7 +39,11 @@ public class RememberMeFilter extends HttpFilter implements Filter {
                             String token = c.getValue();
                             User user = userService.rememberMe(token);
 
-                            session.setAttribute("user", user);
+                            if (user != null) {
+                                session = ((HttpServletRequest) request).getSession(true);
+                                session.setAttribute("user", user);
+                            }
+                            break;
                         }
                     }
                 }

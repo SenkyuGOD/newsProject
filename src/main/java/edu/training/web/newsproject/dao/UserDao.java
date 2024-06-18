@@ -4,7 +4,7 @@ import edu.training.web.newsproject.beans.AuthInfo;
 import edu.training.web.newsproject.beans.User;
 import edu.training.web.newsproject.beans.UserRegInfo;
 
-import java.util.Map;
+import java.util.List;
 
 public interface UserDao {
     User signIn (AuthInfo authInfo) throws DaoException;
@@ -21,5 +21,7 @@ public interface UserDao {
 
     void changeUserPassword(int id, String newPassword) throws DaoException;
 
-    Map<String, User> getAllUsers() throws DaoException;
+    void updateUserToken(int userId, String token) throws DaoException;
+
+    List<User> getAllUsers() throws DaoException;
 }

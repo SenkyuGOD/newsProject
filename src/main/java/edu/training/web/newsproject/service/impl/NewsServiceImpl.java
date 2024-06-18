@@ -67,8 +67,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> getAllNews() throws ServiceException {
         try {
-            List<News> result = newsDao.getAllNews();
-            return result;
+            return newsDao.getAllNews();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

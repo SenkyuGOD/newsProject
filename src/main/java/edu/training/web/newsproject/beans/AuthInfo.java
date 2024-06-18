@@ -14,8 +14,10 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthInfo implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
+
     @NotEmpty(message = "User cannot be empty")
     @Size(min = 2, max = 20)
     private String username;
@@ -37,12 +39,5 @@ public class AuthInfo implements Serializable {
         return Objects.hash(username, password);
     }
 
-    @Override
-    public String toString() {
-        return "AuthInfo{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }
 

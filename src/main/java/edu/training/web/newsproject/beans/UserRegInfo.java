@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,9 +18,17 @@ public class UserRegInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer userId;
+
+    @NotEmpty
     private String username;
+
+    @Email
     private String email;
+
+    @NotEmpty
     private String password;
+
+    @NotEmpty
     private String confirmPassword;
 
 
@@ -35,8 +45,4 @@ public class UserRegInfo implements Serializable {
         return Objects.hash(userId, username, email, password, confirmPassword);
     }
 
-    @Override
-    public String toString() {
-        return "UserRegInfo{" + "userId=" + userId + ", username='" + username + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + ", confirmPassword='" + confirmPassword + '\'' + '}';
-    }
 }

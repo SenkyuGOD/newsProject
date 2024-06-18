@@ -20,10 +20,15 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer userId;
+
     @NotEmpty
     private String username;
+
+    @NotEmpty
     @Email
     private String email;
+
+    @NotEmpty
     private UserRoles role;
 
     @Override

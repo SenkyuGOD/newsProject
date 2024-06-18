@@ -1,6 +1,9 @@
 package edu.training.web.newsproject.dao;
 
+import java.io.Serial;
+
 public class DaoException extends Exception {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public DaoException() {

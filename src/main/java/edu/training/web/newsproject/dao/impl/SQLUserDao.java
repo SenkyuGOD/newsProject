@@ -8,12 +8,14 @@ import edu.training.web.newsproject.dao.UserDao;
 import edu.training.web.newsproject.dao.connetionpool.ConnectionPool;
 import edu.training.web.newsproject.dao.connetionpool.ConnectionPoolException;
 import edu.training.web.newsproject.service.UserRoles;
+import edu.training.web.newsproject.util.IDUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLUserDao implements UserDao {
 
@@ -59,10 +61,28 @@ public class SQLUserDao implements UserDao {
         }
     }
 
-
+    private static final String CHECK_SUER_EXISTS_SQL = "SELECT COUNT(*) FROM user WHERE email = ?";
 
     @Override
     public boolean userExists(String email) throws DaoException {
+
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(CHECK_SUER_EXISTS_SQL)) {
+
+            statement.setString(1, email);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    if (count > 0) {
+                        return true;
+                    }
+                }
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error occurred during check existence", e);
+        }
         return false;
     }
 
@@ -70,9 +90,11 @@ public class SQLUserDao implements UserDao {
 
     @Override
     public User signUp(UserRegInfo userRegInfo) throws DaoException {
-        try (Connection connection = connectionPool.takeConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_SQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_USER_SQL)) {
 
-            statement.setInt(1, 1); // You can replace 1 with a logic to generate or fetch the id
+            int userId = IDUtils.generateID();
+            statement.setInt(1, userId);
             statement.setString(2, userRegInfo.getUsername());
             statement.setString(3, userRegInfo.getEmail());
             statement.setString(4, userRegInfo.getPassword());
@@ -83,29 +105,55 @@ public class SQLUserDao implements UserDao {
                 throw new DaoException("Creating user failed, no rows affected.");
             }
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int id = generatedKeys.getInt(1);
-                    return new User(id, userRegInfo.getUsername(), userRegInfo.getEmail(), UserRoles.READER);
-                } else {
-                    throw new DaoException("Creating user failed, no ID obtained.");
-                }
-            }
+            return new User(userId, userRegInfo.getUsername(), userRegInfo.getEmail(), UserRoles.READER);
 
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error occurred during sign up", e);
         }
     }
 
+    private static final String DELETE_USER_SQL = "DELETE FROM user WHERE idUser = ?;";
+
     @Override
     public void deleteUser(int id) throws DaoException {
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER_SQL)) {
 
+            statement.setInt(1, id);
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new DaoException("Deleting user failed, no rows affected.");
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error occurred during deleting user", e);
+        }
     }
+
+
+    private static final String CHANGE_USER_ROLE_SQL = "UPDATE user_has_role SET role_idrole = ? WHERE user_idUser = ?;";
 
     @Override
     public void changeUserRole(int userId, int roleId) throws DaoException {
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(CHANGE_USER_ROLE_SQL)) {
 
+            statement.setInt(1, roleId);
+            statement.setInt(2, userId);
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new DaoException("Changing user role failed, no rows affected.");
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error occurred during changing user role", e);
+        }
     }
+
 
     private static final String GET_ROLE_ID = "SELECT idrole FROM role WHERE title = ?;";
 
@@ -129,13 +177,62 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    private static final String CHANGE_USER_PASSWORD_SQL = "UPDATE user SET password = ? WHERE idUser = ?;";
+
     @Override
     public void changeUserPassword(int id, String newPassword) throws DaoException {
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(CHANGE_USER_PASSWORD_SQL)) {
 
+            statement.setString(1, newPassword);
+            statement.setInt(2, id);
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new DaoException("Changing user password failed, no rows affected.");
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error occurred during changing user password", e);
+        }
     }
 
     @Override
-    public Map<String, User> getAllUsers() throws DaoException {
-        return Map.of();
+    public void updateUserToken(int userId, String token) throws DaoException {
+
     }
+
+
+    private static final String SELECT_ALL_USERS_SQL = "SELECT u.idUser, u.username, u.email, r.title AS role" +
+            "FROM user u" +
+            "JOIN user_has_role ur ON u.idUser = ur.user_idUser" +
+            "JOIN role r ON ur.role_idrole = r.idrole;";
+
+    @Override
+    public List<User> getAllUsers() throws DaoException {
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_USERS_SQL);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int idUser = resultSet.getInt("idUser");
+                String username = resultSet.getString("username");
+                String email = resultSet.getString("email");
+                String roleName = resultSet.getString("role");
+                UserRoles role = UserRoles.valueOf(roleName.toUpperCase());
+
+                User user = new User(idUser, username, email, role);
+                users.add(user);
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error occurred during fetching all users", e);
+        }
+
+        return users;
+    }
+
 }

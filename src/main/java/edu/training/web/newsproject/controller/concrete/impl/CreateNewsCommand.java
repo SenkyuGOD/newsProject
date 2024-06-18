@@ -19,8 +19,6 @@ public class CreateNewsCommand implements Command {
 
         String title = request.getParameter("title");
         String content = request.getParameter("content");
-        String author = request.getParameter("author");
-        String category = request.getParameter("category");
         String imageUrl = request.getParameter("imageUrl");
 
         News news = new News();
@@ -28,8 +26,7 @@ public class CreateNewsCommand implements Command {
         news.setNewsContent(content);
         news.setNewsImg(imageUrl);
         news.setNewsId(IDUtils.generateID());
-        news.setAuthor(author);
-        news.setCategory(category);
+
 
         try {
             newsService.createNews(news);

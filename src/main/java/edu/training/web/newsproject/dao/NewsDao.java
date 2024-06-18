@@ -9,7 +9,9 @@ public interface NewsDao {
 
     void updateNews(News news) throws DaoException;
 
-    News getNewsById(Long id) throws DaoException;
+    News getNewsById(int id) throws DaoException;
+
+    void deleteNewsById(int id) throws DaoException;
 
     News getNewsByTitle(String title) throws DaoException;
 

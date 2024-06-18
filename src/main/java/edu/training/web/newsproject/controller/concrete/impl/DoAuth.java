@@ -25,7 +25,7 @@ public class DoAuth implements Command {
         String password = request.getParameter("password");
 
         System.out.println("Perform user authentication and authorization. Login: " + login);
-        Optional<User> user;
+        User user;
         try {
             user = userService.signIn(new AuthInfo(login, password));
 

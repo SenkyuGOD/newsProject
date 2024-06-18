@@ -22,9 +22,6 @@ public class UpdateNewsCommand implements Command {
 
             news.setNewsTitle(oldNews.getNewsTitle());
             news.setNewsContent(oldNews.getNewsContent());
-            news.setCategory(oldNews.getCategory());
-            news.setAuthor(request.getParameter("author"));
-            news.setNewsContent(request.getParameter("content"));
             news.setNewsImg(request.getParameter("img"));
 
             newsService.updateNews(news);
