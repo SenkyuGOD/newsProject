@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User signUp(UserRegInfo regInfo) throws ServiceException {
+    public void signUp(UserRegInfo regInfo) throws ServiceException {
 
         log.log(Level.INFO, "signUp");
         User user;
@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService {
             log.log(Level.INFO, "DaoException", e);
             throw new ServiceException(e);
         }
-        return user;
     }
 
     @Override

@@ -198,9 +198,54 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    private static final String UPDATE_USER_TOKEN_SQL = "UPDATE user SET token = ? WHERE idUser = ?";
+
     @Override
     public void updateUserToken(int userId, String token) throws DaoException {
+        try(Connection connection = connectionPool.takeConnection();
+        PreparedStatement statement = connection.prepareStatement(UPDATE_USER_TOKEN_SQL)) {
 
+            statement.setString(1,token);
+            statement.setInt(2,userId);
+
+            statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error occurred during updating user token", e);
+        }
+
+    }
+
+    private static final String FIND_USER_BY_TOKEN_SQL =
+            "SELECT idUser, username, email, password, token FROM user WHERE token = ?";
+
+    @Override
+    public User findUserByToken(String token) throws DaoException {
+        try(Connection connection = connectionPool.takeConnection();
+        PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_TOKEN_SQL)) {
+
+            statement.setString(1,token);
+
+            try(ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int idUser = resultSet.getInt("idUser");
+                    String username = resultSet.getString("username");
+                    String email = resultSet.getString("email");
+                    String roleStr = resultSet.getString("role");
+
+                    UserRoles role;
+                    try {
+                        role = UserRoles.valueOf(roleStr.toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        throw new DaoException("Invalid role found for user.", e);
+                    }
+                    return new User(idUser, username, email, role);
+                } else {
+                    throw new DaoException("Invalid user token.");
+                }
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error occurred during finding user by token", e);
+        }
     }
 
 

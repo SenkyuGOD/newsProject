@@ -9,11 +9,12 @@ import java.util.Map;
 public interface UserService {
     User signIn(AuthInfo authInfo) throws ServiceException;
 
-    User signUp(UserRegInfo regInfo) throws ServiceException;
+    void signUp(UserRegInfo regInfo) throws ServiceException;
 
     void changeUserPassword(int id, String newPassword, String confirmPassword) throws ServiceException;
 
     User rememberMe(String token) throws ServiceException;
+
 
     void deleteUser(int id) throws ServiceException;
 

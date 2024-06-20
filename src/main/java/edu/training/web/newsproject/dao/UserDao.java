@@ -23,5 +23,7 @@ public interface UserDao {
 
     void updateUserToken(int userId, String token) throws DaoException;
 
+    User findUserByToken(String token) throws DaoException;
+
     List<User> getAllUsers() throws DaoException;
 }
