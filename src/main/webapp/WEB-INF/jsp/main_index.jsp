@@ -7,129 +7,67 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="messages" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новостная страница</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        section {
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        article {
-            background-color: #f4f4f4;
-            padding: 20px;
-            width: 30%; /* Ширина новостного блока */
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            border-radius: 5px;
-        }
-
-        article img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>News Page</title>
+    <link rel="stylesheet" href="style/main.css">
 </head>
 <body>
 <header>
-    <h1>Новости</h1>
-    <nav>
-        <ul>
-            <li><a href="#">Главная</a></li>
-            <li><a href="#">Новости</a></li>
-            <li><a href="#">О нас</a></li>
-            <!-- Здесь может быть другая навигация по сайту -->
-        </ul>
-    </nav>
+    <div class="container">
+        <h1>Latest News</h1>
+        <div class="auth-buttons">
+            <button id="login-btn">Login</button>
+            <button id="register-btn">Register</button>
+        </div>
+        <div class="language-selector">
+            <label for="language">Language:</label>
+            <select id="language">
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+            </select>
+        </div>
+    </div>
 </header>
-
-<section>
-    <article>
-        <img src="<c:out value="${requestScope.AllNews[1].newsImg}"/>" alt="Описание изображения">
-        <h2><c:out value="${requestScope.AllNews[1].newsTitle}" /></h2>
-        <a href="MyController?command=go_to_news_page&id=2">Читать далее...</a>
-    </article>
-
-    <article>
-        <img src="<c:out value="${requestScope.AllNews[0].newsImg}"/>" alt="Описание изображения">
-        <h2><c:out value="${requestScope.AllNews[0].newsTitle}" /></h2>
-        <a href="MyController?command=go_to_news_page&id=1">Читать далее...</a>
-    </article>
-
-
-</section>
-
+<nav>
+    <ul>
+        <li><a href="#news">News</a></li>
+    </ul>
+</nav>
+<main>
+    <section id="news">
+        <h2>News</h2>
+        <article>
+            <h3>Event 1</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </article>
+        <article>
+            <h3>Event 2</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </article>
+        <article>
+            <h3>Event 3</h3>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </article>
+        <article>
+            <h3>Event 4</h3>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </article>
+    </section>
+</main>
 <footer>
-    <p>&copy; 2024 Новостная страница. Все права защищены.</p>
+    <p>&copy; 2024 News Page</p>
 </footer>
-
-
-<a href="MyController?command=go_to_auth_page" class="btn">Авторизация</a>
-
-
 </body>
 </html>
+
+

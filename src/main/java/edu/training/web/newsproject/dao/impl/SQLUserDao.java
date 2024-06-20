@@ -89,7 +89,7 @@ public class SQLUserDao implements UserDao {
     private static final String INSERT_USER_SQL = "INSERT INTO user (idUser, username, email, password) VALUES (?, ?, ?, ?)";
 
     @Override
-    public User signUp(UserRegInfo userRegInfo) throws DaoException {
+    public void signUp(UserRegInfo userRegInfo) throws DaoException {
         try (Connection connection = connectionPool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_USER_SQL)) {
 
@@ -104,8 +104,6 @@ public class SQLUserDao implements UserDao {
             if (affectedRows == 0) {
                 throw new DaoException("Creating user failed, no rows affected.");
             }
-
-            return new User(userId, userRegInfo.getUsername(), userRegInfo.getEmail(), UserRoles.READER);
 
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error occurred during sign up", e);

@@ -9,14 +9,15 @@ import edu.training.web.newsproject.dao.UserDao;
 import edu.training.web.newsproject.service.ServiceException;
 import edu.training.web.newsproject.service.UserService;
 
-import java.util.Map;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserServiceImpl implements UserService {
     private final UserDao userDao = DaoProvider.getInstance().getUserDao();
 
-    public static final  Logger log = Logger.getLogger(UserServiceImpl.class.getName());
+    public static final Logger log = Logger.getLogger(UserServiceImpl.class.getName());
 
 
     @Override
@@ -39,33 +40,61 @@ public class UserServiceImpl implements UserService {
     public void signUp(UserRegInfo regInfo) throws ServiceException {
 
         log.log(Level.INFO, "signUp");
-        User user;
+
 
         try {
-            user = userDao.signUp(regInfo);
-        }catch(DaoException e) {
+            userDao.signUp(regInfo);
+        } catch (DaoException e) {
             log.log(Level.INFO, "DaoException", e);
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void changeUserPassword(int id, String newPassword, String confirmPassword) throws ServiceException {
-
+    public User rememberMe(String token) throws ServiceException {
+        try {
+            log.log(Level.INFO, "rememberMe");
+            return userDao.findUserByToken(token);
+        } catch (DaoException e) {
+            log.log(Level.INFO, "DaoException", e);
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public User rememberMe(String token) throws ServiceException {
-        return null;
+    public String createRememberMeToken(int userId) throws ServiceException {
+        try {
+            log.log(Level.INFO, "createRememberMeToken");
+            String token = UUID.randomUUID().toString();
+
+            userDao.updateUserToken(userId, token);
+            return token;
+        } catch (DaoException e) {
+            log.log(Level.INFO, "DaoException", e);
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public void deleteUser(int id) throws ServiceException {
+        try {
+            log.log(Level.INFO, "deleteUser");
+            userDao.deleteUser(id);
+        } catch (DaoException e) {
+            log.log(Level.INFO, "DaoException", e);
+            throw new ServiceException(e);
+        }
 
     }
 
     @Override
-    public Map<String, User> getAllUsers() throws ServiceException {
-        return Map.of();
+    public List<User> getAllUsers() throws ServiceException {
+        try {
+            log.log(Level.INFO, "getAllUsers");
+            return userDao.getAllUsers();
+        } catch (DaoException e) {
+            log.log(Level.INFO, "DaoException", e);
+            throw new ServiceException(e);
+        }
     }
 }

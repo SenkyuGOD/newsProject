@@ -11,7 +11,7 @@ public interface UserDao {
 
     boolean userExists(String email) throws DaoException;
 
-    User signUp(UserRegInfo userRegInfo) throws DaoException;
+    void signUp(UserRegInfo userRegInfo) throws DaoException;
 
     void deleteUser(int id) throws DaoException;
 
