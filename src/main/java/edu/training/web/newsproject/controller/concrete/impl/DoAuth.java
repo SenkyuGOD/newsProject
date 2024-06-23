@@ -21,7 +21,7 @@ public class DoAuth implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String login = request.getParameter("login");
+        String login = request.getParameter("username");
         String password = request.getParameter("password");
 
         System.out.println("Perform user authentication and authorization. Login: " + login);
@@ -49,7 +49,7 @@ public class DoAuth implements Command {
 
         } catch (ServiceException e) {
             // logging
-            response.sendRedirect("MyController?command=go_to_index_page&authError=Wrong login or password!");
+            response.sendRedirect("MyController?command=go_to_auth_page&authError=Wrong login or password!");
         }
     }
 }

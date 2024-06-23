@@ -57,6 +57,7 @@ public class RememberMeFilter extends HttpFilter implements Filter {
 
     }
 
+
     public void init(FilterConfig fConfig) throws ServletException {
 
     }

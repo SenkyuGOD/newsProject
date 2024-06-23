@@ -8,6 +8,7 @@ import edu.training.web.newsproject.dao.DaoProvider;
 import edu.training.web.newsproject.dao.UserDao;
 import edu.training.web.newsproject.service.ServiceException;
 import edu.training.web.newsproject.service.UserService;
+import edu.training.web.newsproject.util.TokenUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,18 +38,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void signUp(UserRegInfo regInfo) throws ServiceException {
-
-        log.log(Level.INFO, "signUp");
-
-
+    public void signUp(UserRegInfo userRegInfo) throws ServiceException {
         try {
-            userDao.signUp(regInfo);
+            log.log(Level.INFO, "signUp");
+            String token = TokenUtils.generateToken();
+            userRegInfo.setToken(token);
+
+            userDao.signUp(userRegInfo);
         } catch (DaoException e) {
             log.log(Level.INFO, "DaoException", e);
-            throw new ServiceException(e);
+            throw new ServiceException("Error during sign up", e);
         }
     }
+
 
     @Override
     public User rememberMe(String token) throws ServiceException {

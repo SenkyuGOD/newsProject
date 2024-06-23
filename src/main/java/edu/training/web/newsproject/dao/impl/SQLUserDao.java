@@ -86,29 +86,41 @@ public class SQLUserDao implements UserDao {
         return false;
     }
 
-    private static final String INSERT_USER_SQL = "INSERT INTO user (idUser, username, email, password) VALUES (?, ?, ?, ?)";
+    private static final String INSERT_USER_SQL = "INSERT INTO user (idUser, username, email, password, token) VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_USER_ROLE_SQL = "INSERT INTO user_has_role (user_idUser, role_idrole) VALUES (?, ?)";
 
     @Override
     public void signUp(UserRegInfo userRegInfo) throws DaoException {
-        try (Connection connection = connectionPool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_USER_SQL)) {
+        try (Connection connection = connectionPool.takeConnection()) {
+            try (PreparedStatement userStmt = connection.prepareStatement(INSERT_USER_SQL);
+                 PreparedStatement roleStmt = connection.prepareStatement(INSERT_USER_ROLE_SQL)) {
 
-            int userId = IDUtils.generateID();
-            statement.setInt(1, userId);
-            statement.setString(2, userRegInfo.getUsername());
-            statement.setString(3, userRegInfo.getEmail());
-            statement.setString(4, userRegInfo.getPassword());
+                userStmt.setInt(1, userRegInfo.getUserId());
+                userStmt.setString(2, userRegInfo.getUsername());
+                userStmt.setString(3, userRegInfo.getEmail());
+                userStmt.setString(4, userRegInfo.getPassword());
+                userStmt.setString(5, userRegInfo.getToken());
 
-            int affectedRows = statement.executeUpdate();
+                int affectedRows = userStmt.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new DaoException("Creating user failed, no rows affected.");
+                if (affectedRows == 0) {
+                    throw new DaoException("Creating user failed, no rows affected.");
+                }
+
+                roleStmt.setInt(1, userRegInfo.getUserId());
+                roleStmt.setInt(2, userRegInfo.getRoles().ordinal()); // Преобразуем роль в int
+
+                roleStmt.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new DaoException("Error occurred during sign up", e);
             }
-
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error occurred during sign up", e);
         }
     }
+
+
 
     private static final String DELETE_USER_SQL = "DELETE FROM user WHERE idUser = ?;";
 

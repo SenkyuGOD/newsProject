@@ -1,5 +1,6 @@
 package edu.training.web.newsproject.beans;
 
+import edu.training.web.newsproject.service.UserRoles;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -31,18 +32,21 @@ public class UserRegInfo implements Serializable {
     @NotEmpty
     private String confirmPassword;
 
+    @NotEmpty
+    private UserRoles roles;
+
+    private String token;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserRegInfo that = (UserRegInfo) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(confirmPassword, that.confirmPassword);
+        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(confirmPassword, that.confirmPassword) && roles == that.roles && Objects.equals(token, that.token);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, email, password, confirmPassword);
+        return Objects.hash(userId, username, email, password, confirmPassword, roles, token);
     }
-
 }

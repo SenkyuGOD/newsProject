@@ -1,0 +1,96 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="password"], input[type="email"], select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+p a {
+    color: #333;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Styles for the auth buttons */
+.auth-buttons a {
+    color: white;
+    background-color: #333;
+    padding: 10px;
+    margin: 0 5px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.auth-buttons a:hover {
+    background-color: #555;
+}
+
+/* Styles for the profile link */
+#profile-btn, #logout-btn {
+    color: white;
+    background-color: #333;
+    padding: 10px;
+    margin: 0 5px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+#profile-btn:hover, #logout-btn:hover {
+    background-color: #555;
+}

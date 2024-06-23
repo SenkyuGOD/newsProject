@@ -12,86 +12,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Страница регистрации</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f4f4f4;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        .login-link {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        .login-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="style/reg.css">
 </head>
 <body>
-<div class="container">
-    <h2>Регистрация</h2>
+<header>
+    <h1>Register</h1>
+</header>
+<main>
     <form action="MyController" method="post">
-        <input type="hidden" name="command" value="do_registration"/>
-        <div class="input-group">
-            <label for="username">Имя пользователя:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="input-group">
-            <label for="password">Пароль:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div class="input-group">
-            <label for="confirm_password">Подтвердите пароль:</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
-        </div>
-        <div class="input-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <button type="submit" class="btn">Зарегистрироваться</button>
+        <input type="hidden" name="command" value="do_registration">
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+
+        <label for="role">Register as:</label>
+        <select id="role" name="role" required>
+            <option value="READER">Reader</option>
+            <option value="AUTHOR">Author</option>
+        </select>
+
+
+        <button type="submit">Register</button>
     </form>
-    <p>Уже есть аккаунт? <a href="#" class="login-link">Войдите</a></p>
-</div>
+    <p>Already have an account? <a href="MyController?command=go_to_auth_page">Login here</a>.</p>
+</main>
 </body>
 </html>
+

@@ -23,7 +23,6 @@ public class AuthInfo implements Serializable {
     private String username;
 
     @NotEmpty(message = "Password cannot be empty")
-    @Size(min = 6, max = 20)
     private String password;
 
     @Override
