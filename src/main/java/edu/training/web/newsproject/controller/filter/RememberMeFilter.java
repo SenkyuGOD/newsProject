@@ -5,11 +5,12 @@ import edu.training.web.newsproject.service.ServiceException;
 import edu.training.web.newsproject.service.ServiceProvider;
 import edu.training.web.newsproject.service.UserService;
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.io.Serial;
-
+@WebFilter
 public class RememberMeFilter extends HttpFilter implements Filter {
     @Serial
     private static final long serialVersionUID = 1L;

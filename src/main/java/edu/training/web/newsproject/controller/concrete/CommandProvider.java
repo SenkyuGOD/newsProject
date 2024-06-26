@@ -23,6 +23,7 @@ public class CommandProvider {
         commands.put(CommandName.GET_NEWS, new GetNewsCommand());
         commands.put(CommandName.UPDATE_NEWS, new UpdateNewsCommand());
 
+        commands.put(CommandName.SET_LOCALE, new SetLocale());
         commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
     }
 

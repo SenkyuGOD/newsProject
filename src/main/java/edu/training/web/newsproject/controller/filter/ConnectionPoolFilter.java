@@ -1,10 +1,11 @@
 package edu.training.web.newsproject.controller.filter;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 
 import java.io.IOException;
-
+@WebFilter
 public class ConnectionPoolFilter extends HttpFilter implements Filter {
 
     public ConnectionPoolFilter() {

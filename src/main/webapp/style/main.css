@@ -28,8 +28,7 @@ header h1 {
 
 nav.nav-left a,
 .auth-buttons a,
-.language-selector label,
-.language-selector select {
+.language-selector a {
     color: #fff;
     text-decoration: none;
     font-size: 24px;
@@ -45,19 +44,13 @@ nav.nav-left a {
     margin-left: 10px;
 }
 
-.language-selector select {
-    background-color: #333;
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
+.language-selector a {
+    margin: 0 5px;
 }
 
 nav.nav-left a:hover,
 .auth-buttons a:hover,
-.language-selector select:hover {
+.language-selector a:hover {
     color: #aaa;
 }
 
@@ -85,31 +78,4 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
-}
-
-.auth-buttons a {
-    color: white;
-    background-color: #333;
-    padding: 10px;
-    margin: 0 5px;
-    text-decoration: none;
-    border-radius: 3px;
-}
-
-.auth-buttons a:hover {
-    background-color: #555;
-}
-
-/* Styles for the profile link */
-#profile-btn, #logout-btn {
-    color: white;
-    background-color: #333;
-    padding: 10px;
-    margin: 0 5px;
-    text-decoration: none;
-    border-radius: 3px;
-}
-
-#profile-btn:hover, #logout-btn:hover {
-    background-color: #555;
 }
