@@ -23,6 +23,8 @@ public class CommandProvider {
         commands.put(CommandName.GET_NEWS, new GetNewsCommand());
         commands.put(CommandName.UPDATE_NEWS, new UpdateNewsCommand());
 
+        commands.put(CommandName.CHANGE_PASSWORD, new ChangePassword());
+
         commands.put(CommandName.SET_LOCALE, new SetLocale());
         commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
     }
@@ -34,7 +36,7 @@ public class CommandProvider {
         try {
             commandName = CommandName.valueOf(userCommand.toUpperCase());
             command = commands.get(commandName);
-        }catch(IllegalArgumentException | NullPointerException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             command = commands.get(CommandName.NO_SUCH_COMMAND);
         }
 

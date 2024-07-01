@@ -9,5 +9,7 @@ public enum CommandName {
 
     SET_LOCALE,
 
+    CHANGE_PASSWORD,
+
     NO_SUCH_COMMAND
 }

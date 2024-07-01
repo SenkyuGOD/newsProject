@@ -23,6 +23,20 @@
     <p>Welcome, <c:out value="${sessionScope.user.username}" />!</p>
     <p>Email: <c:out value="${sessionScope.user.email}" /></p>
     <a href="MyController?command=do_logout">Logout</a>
+
+    <h2>Change Password</h2>
+    <form action="MyController?command=change_password" method="post">
+        <label for="currentPassword">Current Password:</label>
+        <input type="password" id="currentPassword" name="currentPassword" required>
+
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+
+        <label for="confirmPassword">Confirm New Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <button type="submit">Change Password</button>
+    </form>
 </main>
 </body>
 </html>

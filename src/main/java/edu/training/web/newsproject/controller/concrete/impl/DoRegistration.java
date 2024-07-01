@@ -45,7 +45,7 @@ public class DoRegistration implements Command {
                 return;
             }
 
-            // Создание объекта UserRegInfo
+
             UserRegInfo userRegInfo = new UserRegInfo();
             userRegInfo.setUserId(IDUtils.generateID());
             userRegInfo.setUsername(username);
@@ -53,14 +53,14 @@ public class DoRegistration implements Command {
             userRegInfo.setEmail(email);
             userRegInfo.setConfirmPassword(confirmPassword);
 
-            // Преобразование строки в enum
+
             UserRoles userRole = UserRoles.valueOf(role.toUpperCase());
             userRegInfo.setRoles(userRole);
 
-            // Вызов метода signUp
+
             userService.signUp(userRegInfo);
 
-            // Перенаправление на главную страницу
+
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         } catch (ServiceException e) {
             request.setAttribute("error", e.getMessage());

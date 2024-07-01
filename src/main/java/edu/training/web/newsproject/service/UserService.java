@@ -15,6 +15,8 @@ public interface UserService {
 
     String createRememberMeToken(int userId) throws ServiceException;
 
+    void changePassword(int id, String newPassword) throws ServiceException;
+
     void deleteUser(int id) throws ServiceException;
 
     List<User> getAllUsers() throws ServiceException;

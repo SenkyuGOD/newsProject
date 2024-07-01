@@ -40,12 +40,13 @@ public class SQLUserDao implements UserDao {
             statement.setString(2, authInfo.getPassword());
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                logger.log(Level.INFO, resultSet.getString("username"));
                 if (resultSet.next()) {
                     int idUser = resultSet.getInt("idUser");
                     String username = resultSet.getString("username");
                     String email = resultSet.getString("email");
                     String roleStr = resultSet.getString("role");
+
+                    logger.log(Level.INFO, "User found: " + username);
 
                     UserRoles role;
                     try {
@@ -65,6 +66,7 @@ public class SQLUserDao implements UserDao {
             throw new DaoException("Error occurred during sign in", e);
         }
     }
+
 
     private static final String CHECK_SUER_EXISTS_SQL = "SELECT COUNT(*) FROM user WHERE email = ?";
 
