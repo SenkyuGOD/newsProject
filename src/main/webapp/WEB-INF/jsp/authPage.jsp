@@ -23,7 +23,7 @@
 </head>
 <body>
 <header>
-    <h1><fmt:message key="login.auth"/> </h1>
+    <h1><fmt:message key="login.auth"/></h1>
 </header>
 <main>
     <form action="MyController" method="post">
@@ -39,7 +39,7 @@
             <fmt:message key="login.remember_me"/>
         </label>
 
-        <button type="submit">Login</button>
+        <button type="submit"><fmt:message key="login.login"/></button>
     </form>
     <p><fmt:message key="login.dont_have_acc"/> <a href="MyController?command=go_to_registration_page"><fmt:message
             key="login.register_here"/></a>.</p>
