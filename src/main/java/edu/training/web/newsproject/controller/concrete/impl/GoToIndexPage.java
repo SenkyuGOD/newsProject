@@ -26,7 +26,7 @@ public class GoToIndexPage implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/main_index.jsp");
             dispatcher.forward(request, response);}
             catch (ServiceException e){
-                e.printStackTrace();
+
             }
     }
 }

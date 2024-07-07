@@ -17,7 +17,7 @@ public class News implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Integer newsId;
+    private int newsId;
 
     @NotEmpty
     private String newsTitle;

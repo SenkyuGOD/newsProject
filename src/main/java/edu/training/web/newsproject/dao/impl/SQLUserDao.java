@@ -8,7 +8,6 @@ import edu.training.web.newsproject.dao.UserDao;
 import edu.training.web.newsproject.dao.connetionpool.ConnectionPool;
 import edu.training.web.newsproject.dao.connetionpool.ConnectionPoolException;
 import edu.training.web.newsproject.service.UserRoles;
-import edu.training.web.newsproject.util.IDUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

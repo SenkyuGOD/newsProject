@@ -15,7 +15,7 @@ public class UpdateNewsCommand implements Command {
     private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("id"));
         try {
             News news = new News();
             News oldNews = newsService.getNewsById(id);

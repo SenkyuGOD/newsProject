@@ -56,21 +56,22 @@ public class SQLNewsDao implements NewsDao {
         try (Connection connection = connectionPool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_NEWS_SQL)) {
 
-            logger.log(Level.INFO, "Updating new news " + news);
+            logger.log(Level.INFO, "Updating news " + news);
 
             statement.setString(1, news.getNewsTitle());
             statement.setString(2, news.getNewsContent());
             statement.setString(3, news.getNewsImg());
+            statement.setInt(4, news.getNewsId());
 
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected == 0) {
-                throw new DaoException("Failed to update new news " + news);
+                throw new DaoException("Failed to update news " + news);
             }
 
             logger.log(Level.INFO, "News updated with ID " + news.getNewsId());
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Failed to update new news " + news, e);
+            throw new DaoException("Failed to update news " + news, e);
         }
     }
 
@@ -81,7 +82,7 @@ public class SQLNewsDao implements NewsDao {
         try (Connection connection = connectionPool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(GET_NEWS_SQL)) {
 
-            logger.log(Level.INFO, "Getting new news " + id);
+            logger.log(Level.INFO, "Getting news " + id);
 
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -94,12 +95,12 @@ public class SQLNewsDao implements NewsDao {
                     return new News(newsId, title, brief, img_path);
 
                 } else {
-                    throw new DaoException("Failed to get new news " + id);
+                    throw new DaoException("Failed to get news " + id);
                 }
 
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Failed to get new news " + id, e);
+            throw new DaoException("Failed to get news " + id, e);
         }
     }
 
@@ -110,17 +111,17 @@ public class SQLNewsDao implements NewsDao {
         try (Connection connection = connectionPool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_NEWS_SQL)) {
 
-            logger.log(Level.INFO, "Deleting new news " + id);
+            logger.log(Level.INFO, "Deleting news " + id);
 
             statement.setInt(1, id);
 
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected == 0) {
-                throw new DaoException("Failed to delete new news " + id);
+                throw new DaoException("Failed to delete news " + id);
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Failed to delete new news " + id, e);
+            throw new DaoException("Failed to delete news " + id, e);
         }
 
     }
@@ -131,20 +132,24 @@ public class SQLNewsDao implements NewsDao {
     public News getNewsByTitle(String title) throws DaoException {
         try (Connection connection = connectionPool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(GET_NEWS_SQL_BY_TITLE)) {
-            logger.log(Level.INFO, "Getting new news " + title);
+            logger.log(Level.INFO, "Getting news " + title);
 
             statement.setString(1, title);
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                int newsID = resultSet.getInt("idnews");
-                String titleNews = resultSet.getString("title");
-                String brief = resultSet.getString("brief");
-                String img = resultSet.getString("img_path");
+                if (resultSet.next()) {
+                    int newsID = resultSet.getInt("idnews");
+                    String titleNews = resultSet.getString("title");
+                    String brief = resultSet.getString("brief");
+                    String img = resultSet.getString("img_path");
 
-                return new News(newsID, titleNews, brief, img);
+                    return new News(newsID, titleNews, brief, img);
+                } else {
+                    throw new DaoException("Failed to get news by title " + title);
+                }
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Failed to get new news " + title, e);
+            throw new DaoException("Failed to get news " + title, e);
         }
     }
 
@@ -169,7 +174,6 @@ public class SQLNewsDao implements NewsDao {
                 newsList.add(news);
             }
 
-
         } catch (SQLException | ConnectionPoolException e) {
             logger.log(Level.INFO, "Failed to get all news", e);
             throw new DaoException("Failed to get all news", e);
@@ -179,3 +183,4 @@ public class SQLNewsDao implements NewsDao {
         return newsList;
     }
 }
+

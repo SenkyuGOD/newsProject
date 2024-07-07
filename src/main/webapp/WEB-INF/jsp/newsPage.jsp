@@ -54,9 +54,16 @@
 <body>
 <div class="container">
     <article class="news-article">
-        <img class="news-img" src="<c:out value="${requestScope.news[0].newsImg}"/>" alt="Описание изображения">
-        <h2 class="news-title"><c:out value="${requestScope.news[0].newsTitle}"/></h2>
-        <p class="news-content"><c:out value="${requestScope.news[0].newsContent}"/></p>
+        <c:choose>
+            <c:when test="${not empty news.newsImg}">
+                <img class="news-img" src="${news.newsImg}" alt="Описание изображения">
+            </c:when>
+            <c:otherwise>
+                <img class="news-img" src="default-image.jpg" alt="Нет изображения">
+            </c:otherwise>
+        </c:choose>
+        <h2 class="news-title"><c:out value="${news.newsTitle}"/></h2>
+        <p class="news-content"><c:out value="${news.newsContent}"/></p>
     </article>
 </div>
 

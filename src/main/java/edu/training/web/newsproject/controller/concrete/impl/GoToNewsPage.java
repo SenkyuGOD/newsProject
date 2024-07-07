@@ -10,24 +10,40 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GoToNewsPage implements Command {
-   private final NewsService infoService = ServiceProvider.getInstance().getNewsService();
+    private static final Logger logger = Logger.getLogger(GoToNewsPage.class.getName());
+    private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        News mainNews = null;
         try {
-            long id = Integer.parseInt(request.getParameter("id"));
-            mainNews = infoService.getNewsById(id);
+            String idParam = request.getParameter("id");
+            logger.info("Received id parameter: {}");
+
+            int id = Integer.parseInt(idParam);
+            News mainNews = newsService.getNewsById(id);
+            logger.info("Retrieved news: {}");
+
+            if (mainNews == null) {
+                logger.warning("No news found for id: {}");
+                response.sendRedirect("MyController?command=go_to_index_page&authError=News not found");
+                return;
+            }
+
+            request.setAttribute("news", mainNews);
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/newsPage.jsp");
+            rd.forward(request, response);
+        } catch (NumberFormatException e) {
+            logger.log(Level.parse("Invalid id format: {}"), request.getParameter("id"), e);
+            response.sendRedirect("MyController?command=go_to_index_page&authError=Invalid id format");
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.info("asdfasdfasdf");
+            response.sendRedirect("MyController?command=go_to_index_page&authError=Something went wrong");
         }
-        request.setAttribute("news", mainNews);
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/newsPage.jsp");
-        rd.forward(request, response);
     }
 }

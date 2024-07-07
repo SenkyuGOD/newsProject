@@ -40,7 +40,7 @@ public class NewsServiceImpl implements NewsService {
 
 
     @Override
-    public News getNewsById(Long id) throws ServiceException {
+    public News getNewsById(int id) throws ServiceException {
         try {
             logger.log(Level.INFO, "getNewsById");
             List<News> newsList = newsDao.getAllNews();

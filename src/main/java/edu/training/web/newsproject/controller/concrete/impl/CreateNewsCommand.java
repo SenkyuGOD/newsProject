@@ -27,10 +27,12 @@ public class CreateNewsCommand implements Command {
         news.setNewsImg(imageUrl);
         news.setNewsId(IDUtils.generateID());
 
+        System.out.println("Create new news:");
 
         try {
             newsService.createNews(news);
             response.sendRedirect("MyController?command=go_to_news_page&id=" + news.getNewsId());
+            System.out.println("all ok");
         } catch (ServiceException e) {
             response.sendRedirect("MyController?command=go_to_index_page&authError=Something went wrong");
         }

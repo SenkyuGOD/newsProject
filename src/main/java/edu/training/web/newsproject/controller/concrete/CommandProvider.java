@@ -18,6 +18,7 @@ public class CommandProvider {
         commands.put(CommandName.GO_TO_NEWS_PAGE, new GoToNewsPage());
         commands.put(CommandName.GO_TO_AUTH_PAGE, new GoToAuthPage());
         commands.put(CommandName.GO_TO_PROFILE_PAGE, new GoToProfilePage());
+        commands.put(CommandName.GO_TO_CREATE_NEWS_PAGE, new GoToCreateNewsPage());
 
         commands.put(CommandName.CREATE_NEWS, new CreateNewsCommand());
         commands.put(CommandName.GET_NEWS, new GetNewsCommand());

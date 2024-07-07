@@ -12,14 +12,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><fmt:message key="main.latest_news"/></title>
+    <title><fmt:message key="title"/></title>
     <link rel="stylesheet" href="style/main.css">
 </head>
 <body>
 <header>
     <div class="container">
         <nav class="nav-left">
-            <a href="#news" class="nav-link"><fmt:message key="header.news"/></a>
+            <a href="MyController?command=go_to_index_page" class="nav-link"><fmt:message key="header.news"/></a>
         </nav>
         <h1><fmt:message key="header.latest_news"/></h1>
         <div class="auth-buttons">
@@ -28,6 +28,12 @@
                     <a href="MyController?command=go_to_profile_page" class="auth-link"><fmt:message
                             key="header.profile"/></a>
                     <a href="MyController?command=do_logout" class="auth-link"><fmt:message key="header.logout"/></a>
+                    <!-- Проверка роли пользователя -->
+                    <c:if test="${sessionScope.user.role eq 'AUTHOR' or sessionScope.user.role eq 'ADMIN'}">
+                        <a href="MyController?command=go_to_create_news_page" class="auth-link">
+                            <fmt:message key="header.add_news"/>
+                        </a>
+                    </c:if>
                 </c:when>
                 <c:otherwise>
                     <a href="MyController?command=go_to_auth_page" class="auth-link"><fmt:message
@@ -50,14 +56,16 @@
 
 <main>
     <h2><fmt:message key="header.news"/></h2>
-    <article>
-        <h3><a href="news1.html"><fmt:message key="news.title1"/> </a></h3>
-        <p><fmt:message key="news.description1"/></p>
-    </article>
-    <article>
-        <h3><a href="news2.html"><fmt:message key="news.title2"/> </a></h3>
-        <p><fmt:message key="news.description2"/></p>
-    </article>
+
+    <c:forEach var="news" items="${AllNews}">
+        <article>
+            <h3><a href="MyController?command=go_to_news_page&id=${news.newsId}">${news.newsTitle}</a></h3>
+        </article>
+    </c:forEach>
+
+    <c:if test="${empty AllNews}">
+        <p><fmt:message key="news.noNews"/></p>
+    </c:if>
 </main>
 <footer>
     <p><fmt:message key="footer.copyright"/></p>
