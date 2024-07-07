@@ -19,10 +19,12 @@ public class CommandProvider {
         commands.put(CommandName.GO_TO_AUTH_PAGE, new GoToAuthPage());
         commands.put(CommandName.GO_TO_PROFILE_PAGE, new GoToProfilePage());
         commands.put(CommandName.GO_TO_CREATE_NEWS_PAGE, new GoToCreateNewsPage());
+        commands.put(CommandName.GO_TO_EDIT_NEWS_PAGE, new GoToEditPage());
 
         commands.put(CommandName.CREATE_NEWS, new CreateNewsCommand());
         commands.put(CommandName.GET_NEWS, new GetNewsCommand());
         commands.put(CommandName.UPDATE_NEWS, new UpdateNewsCommand());
+        commands.put(CommandName.DELETE_NEWS, new DeleteNewsCommand());
 
         commands.put(CommandName.CHANGE_PASSWORD, new ChangePassword());
 

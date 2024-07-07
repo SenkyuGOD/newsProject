@@ -70,6 +70,7 @@ public class SQLNewsDao implements NewsDao {
             }
 
             logger.log(Level.INFO, "News updated with ID " + news.getNewsId());
+            System.out.println("News updated with ID " + news.getNewsId());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Failed to update news " + news, e);
         }
@@ -165,12 +166,12 @@ public class SQLNewsDao implements NewsDao {
             logger.log(Level.INFO, "Getting all news");
 
             while (resultSet.next()) {
-                int idnews = resultSet.getInt("idnews");
+                int newsId = resultSet.getInt("idnews");
                 String title = resultSet.getString("title");
                 String brief = resultSet.getString("brief");
                 String imgPath = resultSet.getString("img_path");
 
-                News news = new News(idnews, title, brief, imgPath);
+                News news = new News(newsId, title, brief, imgPath);
                 newsList.add(news);
             }
 

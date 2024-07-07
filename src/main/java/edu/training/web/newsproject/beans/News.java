@@ -29,6 +29,7 @@ public class News implements Serializable {
     private String newsImg;
 
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

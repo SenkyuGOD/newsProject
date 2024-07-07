@@ -1,57 +1,26 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:set var="locale" value="${sessionScope.locale}"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${sessionScope.locale.language}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новостная страница</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .news-article {
-            background-color: #f4f4f4;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        .news-title {
-            font-size: 24px;
-            margin-top: 0;
-        }
-
-        .news-content {
-            font-size: 18px;
-        }
-
-        .news-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-
-        .footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    <title><fmt:message key="news.newspage"/></title>
+    <link rel="stylesheet" href="style/newsPage.css">
 </head>
 <body>
+<header class="header">
+    <div class="logo"><fmt:message key="news.newspage"/></div>
+    <nav class="nav">
+        <a href="MyController?command=go_to_index_page"><fmt:message key="header.news"/> </a>
+    </nav>
+</header>
+
 <div class="container">
     <article class="news-article">
         <c:choose>
@@ -64,6 +33,22 @@
         </c:choose>
         <h2 class="news-title"><c:out value="${news.newsTitle}"/></h2>
         <p class="news-content"><c:out value="${news.newsContent}"/></p>
+
+        <c:choose>
+            <c:when test="${sessionScope.user.role eq 'AUTHOR' || sessionScope.user.role eq 'ADMIN'}">
+                <a href="MyController?command=go_to_edit_news_page&id=${news.newsId}" class="edit-button"><fmt:message key="news.edit"/></a>
+            </c:when>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${sessionScope.user.role eq 'ADMIN'}">
+                <form action="MyController" method="post" onsubmit="return confirm('<fmt:message key="news.delete.confirm"/>');">
+                    <input type="hidden" name="command" value="delete_news">
+                    <input type="hidden" name="id" value="${news.newsId}">
+                    <button type="submit" class="delete-button"><fmt:message key="news.delete"/></button>
+                </form>
+            </c:when>
+        </c:choose>
     </article>
 </div>
 
@@ -72,3 +57,4 @@
 </footer>
 </body>
 </html>
+

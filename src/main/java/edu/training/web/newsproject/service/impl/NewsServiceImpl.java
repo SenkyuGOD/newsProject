@@ -76,6 +76,17 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public void deleteNewsById(int id) throws ServiceException {
+        try {
+            logger.log(Level.INFO, "deleteNewsById");
+            newsDao.deleteNewsById(id);
+        } catch (DaoException e) {
+            logger.log(Level.SEVERE, "deleteNewsById error", e);
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<News> getAllNews() throws ServiceException {
         try {
             logger.log(Level.INFO, "getAllNews");
